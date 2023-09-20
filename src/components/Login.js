@@ -5,12 +5,11 @@ import { useRef } from "react";
 import { CheckValidate } from "../utils/validate";
 
 const Login = () => {
-
   const [isSignInForm, setSignInForm] = useState(true);
-  const [errorMssg,setErrorMssg] = useState({
+  const [errorMssg, setErrorMssg] = useState({
     isValid: {
-      email:true,
-      password:true
+      email: true,
+      password: true,
     }, // Assume the form is valid by default
     errors: {},
   });
@@ -18,19 +17,22 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
   const handleButtonClick = () => {
-    
-    const validation = CheckValidate(email.current.value,password.current.value);
-    // console.log(validation);
-    setErrorMssg(validation) 
-  }
-  console.log(errorMssg)
-  const {errors,isValid} = errorMssg;
-    console.log(errors)
-    console.log(isValid)
+    const validation = CheckValidate(
+      email.current.value,
+      password.current.value
+    );
+    setErrorMssg(validation);
+  };
+  const { errors, isValid } = errorMssg;
 
   const isSignInToggle = () => {
     setSignInForm(!isSignInForm);
-  }
+    setErrorMssg({
+      isValid: {
+        email: true,
+        password: true,
+      }})
+  };
   return (
     <div>
       <Header />
@@ -40,18 +42,48 @@ const Login = () => {
           alt="logo"
         />
       </div>
-      <form onSubmit={(e) => {e.preventDefault()}} className=" bg-black absolute w-3/12 my-36 p-12 mx-auto right-0 left-0 text-white opacity-90">
-        <h1 className="font-bold text-3xl py-4">{ isSignInForm ? 'Sign In': 'Sign Up'}</h1>
-        {
-          !isSignInForm && <input type="text" placeholder="Full Name" className="p-2 my-2 w-full bg-gray-700"/>
-        }
-        
-        <input ref={email} type="text" placeholder="Email Address" className="p-2 my-2 w-full bg-gray-700"/>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className=" bg-black absolute w-3/12 my-36 p-12 mx-auto right-0 left-0 text-white opacity-90"
+      >
+        <h1 className="font-bold text-3xl py-4">
+          {isSignInForm ? "Sign In" : "Sign Up"}
+        </h1>
+        {!isSignInForm && (
+          <input
+            type="text"
+            placeholder="Full Name"
+            className="p-2 my-2 w-full bg-gray-700"
+          />
+        )}
+
+        <input
+          ref={email}
+          type="text"
+          placeholder="Email Address"
+          className="p-2 my-2 w-full bg-gray-700"
+        />
         <p className=" text-red-600">{!isValid.email && errors.email}</p>
-        <input ref={password} type="password" placeholder="Password" className="p-2 my-2 w-full  bg-gray-700"/>
+        <input
+          ref={password}
+          type="password"
+          placeholder="Password"
+          className="p-2 my-2 w-full  bg-gray-700"
+        />
         <p className=" text-red-600">{!isValid.password && errors.password}</p>
-        <button className=" p-4 my-6 bg-red-700 w-full rounded-lg" onClick={handleButtonClick}>{ isSignInForm ? 'Sign In': 'Sign Up'}</button>
-        <p className=" cursor-pointer" onClick={isSignInToggle}>{ isSignInForm ? 'New to Netflix? Sign up now': 'Already have an account Sign In Now'} </p>
+        <button
+          className=" p-4 my-6 bg-red-700 w-full rounded-lg"
+          onClick={handleButtonClick}
+        >
+          {isSignInForm ? "Sign In" : "Sign Up"}
+        </button>
+        <p className=" cursor-pointer" onClick={isSignInToggle}>
+          {isSignInForm
+            ? "New to Netflix? Sign up now"
+            : "Already have an account Sign In Now"}{" "}
+        </p>
       </form>
     </div>
   );
