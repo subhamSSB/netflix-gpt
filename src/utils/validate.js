@@ -2,7 +2,10 @@
 export const CheckValidate = (emails, passwords) => {
   
   const formValidation = {
-    isValid: {}, // Assume the form is valid by default
+    isValid: {
+      email: true,
+      password: true,
+    }, // Assume the form is valid by default
     errors: {},
   };
 
