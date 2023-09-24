@@ -9,14 +9,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BG_LOGO_URL } from "../utils/constants";
 
 const Login = () => {
   const dispatch = useDispatch();
   const [isSignInForm, setSignInForm] = useState(true);
-  const navigate = useNavigate();
   const [errorMssg, setErrorMssg] = useState({
     isValid: {
       email: true,
@@ -46,24 +45,32 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           updateProfile(user, {
-            displayName: name.current.value, photoURL: "https://example.com/jane-q-user/profile.jpg"
-          }).then(() => {
-            // Profile updated!
-            const {uid,email,displayName,photoURL} = auth.currentUser;
-            dispatch(addUser({uid:uid,email:email,displayName:displayName,photoURL:photoURL}));
-            navigate('/browse');
-          }).catch((error) => {
-            // An error occurred
-            setErrorMssg({
-              isValid: {
-                password: false,
-              },
-              errors: {
-                password: error,
-              },
+            displayName: name.current.value,
+            photoURL: "",
+          })
+            .then(() => {
+              // Profile updated!
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+            })
+            .catch((error) => {
+              // An error occurred
+              setErrorMssg({
+                isValid: {
+                  password: false,
+                },
+                errors: {
+                  password: error,
+                },
+              });
             });
-          });
-          
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -88,10 +95,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          navigate('/browse');
-
-          // ...
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -123,7 +126,8 @@ const Login = () => {
       <Header />
       <div className="absolute">
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/dc1cf82d-97c9-409f-b7c8-6ac1718946d6/14a8fe85-b6f4-4c06-8eaf-eccf3276d557/IN-en-20230911-popsignuptwoweeks-perspective_alpha_website_large.jpg"
+        className=""
+          src={BG_LOGO_URL}
           alt="logo"
         />
       </div>
