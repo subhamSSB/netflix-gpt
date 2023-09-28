@@ -6,7 +6,7 @@ export const API_OPTIONS = {
   headers: {
     accept: "application/json",
     Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZWRhYTE4OGRjZjc1MDk0ZjI0ZGEyYmI3NGQzY2E2MSIsInN1YiI6IjY1MGVmOWFkM2E0YTEyMDBmZjRlM2VlNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gxatqwHVxKef6uLRv9DsJ70df8Tuzimm7AOrLxttyTc",
+      "Bearer "+ process.env.REACT_APP_TMDB_KEY,
   },
 };
 
@@ -18,3 +18,7 @@ export const SUPPORTED_LANG = [
 ];
 
 export const LOGO_URL = "https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png";
+
+// export const OPEN_AI_KEY = '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';
+export const OPEN_AI_KEY = process.env["REACT_APP_OPENAI_KEY"] ;
+
